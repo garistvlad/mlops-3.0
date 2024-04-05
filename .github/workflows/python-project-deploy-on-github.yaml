@@ -3,12 +3,10 @@ name: 'Python CI'
 on:
   push:
     branches:
-      - main
-      - 'ha*'
+      - '*'
   pull_request:
     branches:
-      - main
-      - 'ha*'
+      - '*'
 
 jobs:
   deploy:
