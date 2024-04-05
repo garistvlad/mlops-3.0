@@ -1,0 +1,53 @@
+name: 'Python CI'
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  deploy:
+    name: Lint-Format-Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Install project and activate virtual environment
+        run: |
+          poetry install --no-interaction
+          source .venv/bin/activate
+
+      - name: Run pre-commit
+        run: poetry run pre-commit run --all-files
+
+      - name: Run pylint
+        run: poetry run pylint src
+
+      - name: Run mypy
+        run: poetry run mypy src
+
+      - name: Run isort
+        run: poetry run isort src tests
+
+      - name: Run black
+        run: poetry run black src tests
+
+      - name: Run pytest
+        run: poetry run pytest tests
