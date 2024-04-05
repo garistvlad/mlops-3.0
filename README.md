@@ -21,6 +21,10 @@ poetry install
 4. Create `.env` file and provide the following variables inside:
 ```shell
 touch .env
+```
+
+```shell
+# .env
 
 # GCP
 GCP_CREDENTIALS_FILEPATH=
