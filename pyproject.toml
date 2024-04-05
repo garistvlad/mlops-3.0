@@ -34,8 +34,9 @@ disable = ["missing-module-docstring"]
 [tool.pylint.'tests.*']
 disable = ["missing-function-docstring"]
 
-[[tool.mypy.overrides]]
-ignore_missing_imports = true
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 
 [build-system]
 requires = ["poetry-core"]

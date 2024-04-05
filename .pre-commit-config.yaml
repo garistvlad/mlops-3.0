@@ -10,13 +10,10 @@ repos:
       - id: pylint
         name: pylint
         entry: pylint
+        args: [src]
         language: system
         types: [python]
-        args:
-          [
-            "-rn", # Only display messages
-            "-sn", # Don't display the score
-          ]
+        pass_filenames: false
 
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
@@ -34,5 +31,8 @@ repos:
       - id: pytest
         name: pytest
         entry: pytest
+        args: [tests]
         language: system
         types: [python]
+        pass_filenames: false
+        always_run: true

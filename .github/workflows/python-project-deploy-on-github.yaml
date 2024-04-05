@@ -31,8 +31,10 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
 
-      - name: Install project
-        run: poetry install --no-interaction
+      - name: Install project and activate virtual environment
+        run: |
+          poetry install --no-interaction
+          source .venv/bin/activate
 
       - name: Run pre-commit
         run: poetry run pre-commit run --all-files
