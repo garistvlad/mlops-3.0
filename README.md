@@ -8,25 +8,25 @@ The repository is a direct result of the following programming assignments made:
 
 ## Initial Setup
 
-1. Make sure you have `poetry` installed on your computer.
+1. Before running, ensure you have the following software installed:
+- Docker: [Install Docker](https://docs.docker.com/get-docker/)
+- Docker Compose: [Install Docker Compose](https://docs.docker.com/compose/install/)
+
 2. Clone the existing repository:
 ```shell
 git clone https://github.com/garistvlad/mlops-3.0 mlops
 cd mlops
 ```
-3. Install project dependencies:
+
+3. Create `.env.prod` and `.env.dev` files. Provide the variables inside (example could be found in `.env.example`):
 ```shell
-poetry install
-```
-4. Create `.env` file and provide the following variables inside:
-```shell
-touch .env
+touch .env.prod .env.dev
 ```
 
 ```shell
-# .env
+# .env.example
 
-# GCP
+# Google Cloud
 GCP_CREDENTIALS_FILEPATH=
 
 # Postgres
@@ -36,7 +36,22 @@ PG_USER=
 PG_PASSWORD=
 PG_DATABASE=
 
+
 # TODO... exact list of vars will be specified
+```
+
+4. Build and run the Docker containers (`DEV` and `PROD` services configured inside [docker-compose.yaml](docker-compose.yaml)):
+```shell
+docker-compose up -d --build
+```
+
+```shell
+# Expected output:
+...
+Attaching to base-1, dev-1, prod-1
+base-1 exited with code 0
+prod-1  | I am inside PROD
+dev-1   | I am inside DEV
 ```
 
 ## Usage

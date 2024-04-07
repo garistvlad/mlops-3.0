@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Base image
+  base:
+    build:
+      context: .
+      dockerfile: base.Dockerfile
+    image: mlops-base
+
+  # Development entrypoint
+  dev:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    image: mlops-dev
+    # entrypoint: ["tail", "-f", "/dev/null"]  # keep containers running
+    command: ["poetry", "run", "python3", "-c", "print('I am inside DEV')"]
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app  # Mount local directory into container to enable live code reloading
+    env_file: .env.dev
+    environment:
+      - PYTHONUNBUFFERED=1  # Set Python unbuffered output for development
+    depends_on:
+      - base
+
+  # Production service
+  prod:
+    build:
+      context: .
+      dockerfile: prod.Dockerfile
+    image: mlops-prod
+    command: ["poetry", "run", "python3", "-c", "print('I am inside PROD')"]
+    env_file: .env.prod
+    depends_on:
+      - base
